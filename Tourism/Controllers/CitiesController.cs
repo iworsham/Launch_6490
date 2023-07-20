@@ -18,6 +18,7 @@ namespace Tourism.Controllers
         public IActionResult Index(int stateId)
         {
             var state = _context.States
+           
                 .Include(s => s.Cities)
                 .Where(s => s.Id == stateId)
                 .First();
@@ -27,8 +28,14 @@ namespace Tourism.Controllers
 
         public IActionResult New()
         {
-            var state = _context.States;
+          
 
+            return View();
+        }
+      
+        public IActionResult Show(int id)
+        {
+            var state = _context.States.Find(id);
             return View(state);
         }
 

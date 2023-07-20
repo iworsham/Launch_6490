@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Tourism.DataAccess;
 using Tourism.Models;
 
+using System.Collections.Generic;
+
 namespace Tourism.FeatureTests
 {
     public class StateCRUDTests : IClassFixture<WebApplicationFactory<Program>>
@@ -61,6 +63,46 @@ namespace Tourism.FeatureTests
             context.Database.EnsureCreated();
 
             return context;
+        }
+        [Fact]
+        public async Task New_ReturnsForm()
+        {
+            //Arrange
+            var client = _factory.CreateClient();
+            var context = GetDbContext();
+            State state = new State { Name = "Ohio",Abbreviation = "OH" };
+            context.States.Add(state);
+            context.SaveChanges();
+
+            //Act
+            var response = await client.GetAsync("/states/new");
+            var html = await response.Content.ReadAsStringAsync();
+
+            //Assert
+           
+            Assert.Contains("State:", html);
+            Assert.Contains("Abbreviation:", html);
+           
+        }
+        [Fact]
+        public async Task  RedirectsToIndex()
+        {
+            var context = GetDbContext();
+            var client = _factory.CreateClient();
+            State state = new State{Name = "Ohio", Abbreviation = "OH" };
+            City city = new City { Name = "Columbus"};
+            context.States.Add(state);
+            context.Cities.Add(city);
+            context.SaveChanges();
+
+            var response = await client.GetAsync($"/states/{state.Id}/cities");
+            var html = await response.Content.ReadAsStringAsync();
+
+            response.EnsureSuccessStatusCode();
+            //Assert.Contains("New York", html);
+            //Assert.Contains("Ohio", html);
+            Assert.Contains("Columbus", html);
+           
         }
     }
 }

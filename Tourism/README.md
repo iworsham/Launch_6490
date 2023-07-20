@@ -38,11 +38,11 @@ Edit this file with your answers.
 1. Create a Diagram of the Request/Response cycle that would occur when a user creates a city.  Include as much detail as possible!  **Send and image/screenshot of your diagram to your instructors via slack.** (2 points)
 
 2. How does a form submission know what request should be made? Use examples.
-
+Because we tell it where to go in the controller and view. User Inputs new state that new state is then added nto the database from the form
 3. Imagine you are explaining how to create a resource to a co-worker.  How would you describe how the controller action `Create` works?
-
+The Create actions job is to create new objects from forms, forms are code where certain information is passed into the website.
 4. In our State creation functionality - what would happen if a user did not enter an Abbreviation before submitting the form?
-
+Abbreviation would return null or empty.
 
 ## Rubric
 

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Tourism.Models.City>
+
+<h1>Cities</h1>
+
+<a href=\"/states/1/cities/new\">New City</a>
+
+@foreach (var city in Model)
+{
+    <p>Name: @city.Name</p>
+}
